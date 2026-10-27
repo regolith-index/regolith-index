@@ -1,0 +1,5 @@
+{
+  "name": "regolith-index",
+  "private": false,
+  "engines": { "node": "22.x" }
+}

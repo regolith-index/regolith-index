@@ -1,0 +1,4 @@
+node_modules/
+data/index-data.json
+.vercel/
+.DS_Store

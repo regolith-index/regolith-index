@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regolith Index — Space Resources Roundtable archive</title>
+<meta name="description" content="Searchable index and dashboard of Space Resources Roundtable presentations, 1999–2024. Every entry links to the original on isruinfo.com.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='11' fill='%232a78d6'/><circle cx='20' cy='12' r='3' fill='%23fcfcfb'/></svg>">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;
+  --grid:#e1e0d9;--axis:#c3c2b7;--ring:rgba(11,11,11,.10);
+  --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;
+  --seq0:#cde2fb;--seq1:#0d366b;--accent:#2a78d6;--hover:rgba(42,120,214,.08);
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme:dark;
+    --page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);
+    --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+    --seq0:#1c2733;--seq1:#86b6ef;--accent:#3987e5;--hover:rgba(57,135,229,.12);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;
+  --grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;
+  --seq0:#1c2733;--seq1:#86b6ef;--accent:#3987e5;--hover:rgba(57,135,229,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{padding:32px 0 8px}
+header h1{font-size:28px;margin:0 0 4px;letter-spacing:-.01em}
+header p{margin:0;color:var(--ink2);max-width:760px}
+nav.tabs{display:flex;gap:4px;margin:20px 0 16px;border-bottom:1px solid var(--grid);overflow-x:auto}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;font:inherit;color:var(--ink2);cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.theme-toggle{float:right;background:var(--surface);border:1px solid var(--ring);color:var(--ink2);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.card h2{font-size:15px;margin:0 0 2px}
+.card .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+@media (max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:14px 16px}
+.kpi .v{font-size:28px;font-weight:650}
+.kpi .l{color:var(--ink2);font-size:13px}
+.searchbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.searchbar input[type=search]{flex:1 1 320px;min-width:0;padding:11px 14px;border-radius:10px;border:1px solid var(--axis);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+select,.btn{padding:9px 10px;border-radius:10px;border:1px solid var(--axis);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.btn{cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters label{font-size:13px;color:var(--ink2)}
+.status{color:var(--ink2);font-size:13px;margin:6px 0 12px}
+.status .chip{display:inline-block;background:var(--hover);border-radius:999px;padding:1px 8px;margin:2px 2px 0 0;font-size:12px}
+.result{padding:12px 0;border-top:1px solid var(--grid)}
+.result:first-child{border-top:0}
+.result .t{font-weight:600;font-size:15.5px}
+.result .m{color:var(--ink2);font-size:13px;margin-top:2px}
+.result .acts{margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;font-size:13px;align-items:center}
+.result .acts button{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;padding:0}
+.badge{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;border:1px solid var(--ring);color:var(--ink2);margin-left:6px}
+.partial{color:var(--muted);font-size:12px}
+.srcbox{margin-top:8px;padding:10px 12px;background:var(--hover);border-radius:8px;font-size:13px}
+.srcbox li{margin:4px 0}
+mark{background:rgba(237,161,0,.28);color:inherit;border-radius:3px;padding:0 1px}
+.tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ring);box-shadow:0 4px 18px rgba(0,0,0,.18);border-radius:8px;padding:8px 10px;font-size:12.5px;line-height:1.4;max-width:280px;z-index:10;opacity:0;transition:opacity .08s}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin:0 0 8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg text{fill:var(--muted);font-size:11px}
+svg .tick line{stroke:var(--grid)}
+svg .domain{stroke:var(--axis)}
+.chart{width:100%;overflow:hidden}
+table.browse{width:100%;border-collapse:collapse;font-size:13.5px}
+table.browse th{text-align:left;color:var(--ink2);font-weight:600;border-bottom:1px solid var(--axis);padding:8px 6px;cursor:pointer;white-space:nowrap;position:sticky;top:0;background:var(--surface)}
+table.browse td{border-bottom:1px solid var(--grid);padding:7px 6px;vertical-align:top}
+table.browse td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablewrap{max-height:70vh;overflow:auto}
+footer{color:var(--muted);font-size:12.5px;padding:24px 0 40px;border-top:1px solid var(--grid);margin-top:24px}
+.hidden{display:none}
+.prose p,.prose li{color:var(--ink2);max-width:760px}
+.prose h2{font-size:17px;margin:18px 0 6px}
+.contact{display:grid;gap:10px;max-width:560px;margin-top:12px}
+.contact label{display:grid;gap:4px;font-size:14px;color:var(--ink2)}
+.contact input,.contact select,.contact textarea{padding:9px 12px;border-radius:10px;border:1px solid var(--axis);background:var(--surface);color:var(--ink);font:inherit;width:100%;box-sizing:border-box}
+.contact .btn{justify-self:start}
+.contact .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <button class="theme-toggle" id="themeBtn" type="button">Theme</button>
+    <h1>Regolith Index</h1>
+    <p>A searchable index of <strong id="hdrN">~1,000</strong> presentations from the Space Resources Roundtable, 1999–2024. Titles, presenters and conferences only — every entry links to the original on isruinfo.com or LPI/USRA. Nothing is re-hosted here.</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="search">Search</button>
+    <button role="tab" aria-selected="false" data-tab="dash">Dashboard</button>
+    <button role="tab" aria-selected="false" data-tab="browse">Browse all</button>
+    <button role="tab" aria-selected="false" data-tab="about">About</button>
+  </nav>
+
+  <!-- SEARCH -->
+  <section id="tab-search">
+    <form class="searchbar" id="searchForm">
+      <input type="search" id="q" placeholder="e.g. water extraction polar, lunar solar cells, Zacny, asteroid economics" autocomplete="off" aria-label="Search presentations">
+      <button class="btn primary" type="submit">Search</button>
+    </form>
+    <div class="filters">
+      <label>Theme <select id="fCat"><option value="">All themes</option></select></label>
+      <label>Conference <select id="fConf"><option value="">All conferences</option></select></label>
+      <label>From <select id="fFrom"></select></label>
+      <label>To <select id="fTo"></select></label>
+      <button class="btn" type="button" id="clearBtn">Clear</button>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="card"><div id="results"></div></div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="tab-dash" class="hidden">
+    <div class="kpis" id="kpis"></div>
+    <div class="card">
+      <h2>Presentations per conference</h2>
+      <p class="sub">Count of indexed talks and posters. No roundtable was held in 2009, 2020 or 2021; SRR XXI is not in the dataset, and 2008 (SRR X) has only one indexed entry.</p>
+      <div class="chart" id="cConf"></div>
+    </div>
+    <div class="card">
+      <h2>Theme momentum</h2>
+      <p class="sub">Share of each conference's program by theme — the six largest themes, the rest grouped. 2008 is omitted (only one entry in the dataset).</p>
+      <div class="legend" id="lgMomentum"></div>
+      <div class="chart" id="cMomentum"></div>
+    </div>
+    <div class="card">
+      <h2>Theme × year</h2>
+      <p class="sub">Presentations per theme per conference. Darker = more.</p>
+      <div class="chart" id="cHeat"></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h2>First-time vs returning presenters</h2>
+        <p class="sub">Per conference, by first-listed presenter (matched on surname + first initial).</p>
+        <div class="legend" id="lgNew"></div>
+        <div class="chart" id="cNew"></div>
+      </div>
+      <div class="card">
+        <h2>Most frequent presenters</h2>
+        <p class="sub">Number of conferences with a talk as first-listed presenter.</p>
+        <div class="chart" id="cTop"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Knowledge web</h2>
+      <p class="sub">Themes and the 40 most frequent presenters. A line joins a presenter to each theme they've presented in; thicker = more talks. Drag nodes; hover for detail.</p>
+      <div class="legend" id="lgWeb"></div>
+      <div class="chart" id="cWeb"></div>
+    </div>
+  </section>
+
+  <!-- BROWSE -->
+  <section id="tab-browse" class="hidden">
+    <div class="filters">
+      <input type="search" id="bq" placeholder="Filter this table…" style="flex:1 1 260px;padding:9px 12px;border-radius:10px;border:1px solid var(--axis);background:var(--surface);color:var(--ink);font:inherit">
+      <span class="status" id="bcount" style="margin:0"></span>
+    </div>
+    <div class="card" style="padding:0"><div class="tablewrap"><table class="browse" id="btable">
+      <thead><tr><th data-k="year">Year</th><th data-k="conference">Conference</th><th data-k="author">Presenter(s)</th><th data-k="title">Title</th><th data-k="category">Theme</th><th>Link</th></tr></thead>
+      <tbody></tbody></table></div></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="tab-about" class="hidden prose">
+    <h2>What this is</h2>
+    <p>The Space Resources Roundtable (SRR) has met at the Colorado School of Mines — and earlier at other venues — since 1999, and is one of the longest-running forums on lunar, asteroid and Martian resource utilization. Its proceedings are public on <a href="https://isruinfo.com" rel="noopener">isruinfo.com</a> but spread over two decades of pages with no search. This site is an index over that material.</p>
+    <h2>What it is not</h2>
+    <ul>
+      <li>This is an independent research tool. It is <strong>not affiliated with or endorsed by</strong> the Space Resources Roundtable, the Colorado School of Mines, LPI/USRA or isruinfo.com.</li>
+      <li>No presentation files are hosted or mirrored. Every result links to the original source.</li>
+      <li>Themes are assigned automatically from titles by keyword rules and will sometimes be wrong. "General" means no rule matched.</li>
+      <li>"Find other public sources" uses an AI model with web search. Its suggestions are unverified — check them before citing.</li>
+    </ul>
+    <h2>Corrections and removal requests</h2>
+    <p>If you are an author or rights-holder and want an entry corrected or removed, use the form below. Requests are honored promptly.</p>
+    <form class="contact" id="contactForm" novalidate>
+      <label>Your name <input name="name" required maxlength="120" autocomplete="name"></label>
+      <label>Email <input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+      <label>Topic <select name="topic"><option>Correction</option><option>Removal request</option><option>Copyright / takedown</option><option>Other</option></select></label>
+      <label>Message <textarea name="message" required maxlength="4000" rows="5" placeholder="Which entry, and what should change?"></textarea></label>
+      <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn primary" type="submit">Send</button>
+      <p class="status" id="contactStatus" role="status"></p>
+    </form>
+    <h2>Coverage</h2>
+    <p id="coverage"></p>
+  </section>
+
+  <footer>Regolith Index · independent index · data: manually compiled from isruinfo.com and LPI/USRA meeting pages · not affiliated with the Space Resources Roundtable or Colorado School of Mines.</footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" onerror="var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js';document.head.appendChild(s)"></script>
+<script>
+(() => {
+// ---------- theme toggle ----------
+const root = document.documentElement;
+try { const t = localStorage.getItem('ri-theme'); if (t) root.dataset.theme = t; } catch {}
+document.getElementById('themeBtn').onclick = () => {
+  const dark = getComputedStyle(root).colorScheme.includes('dark');
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('ri-theme', root.dataset.theme); } catch {}
+  if (dashDrawn) drawDash();
+};
+const css = (v) => getComputedStyle(root).getPropertyValue(v).trim();
+
+// ---------- tabs ----------
+let dashDrawn = false, browseDrawn = false;
+document.querySelectorAll('nav.tabs button').forEach((b) => b.onclick = () => showTab(b.dataset.tab));
+function showTab(name) {
+  document.querySelectorAll('nav.tabs button').forEach((b) => b.setAttribute('aria-selected', b.dataset.tab === name));
+  ['search', 'dash', 'browse', 'about'].forEach((t) => document.getElementById('tab-' + t).classList.toggle('hidden', t !== name));
+  if (name === 'dash' && !dashDrawn) { if (!window.d3) { document.getElementById('kpis').textContent = 'Chart library failed to load — reload the page.'; return; } drawDash(); dashDrawn = true; }
+  if (name === 'browse' && !browseDrawn) { drawBrowse(); browseDrawn = true; }
+  history.replaceState(null, '', name === 'search' ? location.pathname + location.search : '#' + name);
+}
+
+// ---------- tooltip ----------
+const tip = document.getElementById('tip');
+function showTip(e, html) { tip.innerHTML = html; tip.style.opacity = 1; moveTip(e); }
+function moveTip(e) {
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 8) x = e.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = e.clientY - h - 14;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function hideTip() { tip.style.opacity = 0; }
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// ---------- data ----------
+const fCat = document.getElementById('fCat'), fConf = document.getElementById('fConf'), fFrom = document.getElementById('fFrom'), fTo = document.getElementById('fTo');
+let DATA, ROWS, CATS, CONFS, YEARS;
+fetch('/data/index-data.json').then((r) => r.json()).then((d) => {
+  DATA = d; CATS = d.cats;
+  ROWS = d.rows.map((r, i) => {
+    const [ci, author, title, url, cat] = r; const [conference, year] = d.confs[ci];
+    const p = d.prefix[url[0]]; const full = url ? encodeURI(p ? p + url.slice(1) : url).replace(/%25([0-9A-F]{2})/gi, '%$1') : '';
+    return { id: i, ci, conference, year, author, title, url: full, category: CATS[cat] };
+  });
+  CONFS = d.confs.map(([n, y]) => ({ name: n, year: y }));
+  YEARS = CONFS.map((c) => c.year);
+  document.getElementById('hdrN').textContent = ROWS.length.toLocaleString();
+  const catCounts = new Map(); ROWS.forEach((r) => catCounts.set(r.category, (catCounts.get(r.category) || 0) + 1));
+  CATS.forEach((c) => fCat.add(new Option(`${c} (${catCounts.get(c) || 0})`, c)));
+  CONFS.forEach((c) => fConf.add(new Option(`${c.year} · ${c.name}`, c.name)));
+  YEARS.forEach((y) => { fFrom.add(new Option(y, y)); fTo.add(new Option(y, y)); });
+  fFrom.value = YEARS[0]; fTo.value = YEARS[YEARS.length - 1];
+  document.getElementById('coverage').textContent = `${ROWS.length} presentations across ${CONFS.length} conferences (${YEARS[0]}–${YEARS[YEARS.length - 1]}). ${ROWS.filter((r) => !r.url).length} entries have no public link. The 2025 and 2026 roundtables are not yet indexed.`;
+
+  // restore from URL
+  const sp = new URLSearchParams(location.search);
+  if (sp.get('q')) document.getElementById('q').value = sp.get('q');
+  ['category:fCat', 'conference:fConf', 'from:fFrom', 'to:fTo'].forEach((kv) => { const [k, id] = kv.split(':'); if (sp.get(k)) document.getElementById(id).value = sp.get(k); });
+  runSearch(false);
+  if (location.hash.slice(1)) showTab(location.hash.slice(1));
+}).catch((e) => { document.getElementById('status').textContent = 'Could not load data: ' + e; });
+
+// ---------- search (server-side) ----------
+document.getElementById('searchForm').onsubmit = (e) => { e.preventDefault(); runSearch(true); };
+['fCat', 'fConf', 'fFrom', 'fTo'].forEach((id) => document.getElementById(id).onchange = () => runSearch(true));
+document.getElementById('clearBtn').onclick = () => {
+  document.getElementById('q').value = ''; fCat.value = ''; fConf.value = '';
+  fFrom.value = YEARS[0]; fTo.value = YEARS[YEARS.length - 1]; runSearch(true);
+};
+let seq = 0;
+async function runSearch(push) {
+  const q = document.getElementById('q').value.trim();
+  const params = new URLSearchParams();
+  if (q) params.set('q', q);
+  if (fCat.value) params.set('category', fCat.value);
+  if (fConf.value) params.set('conference', fConf.value);
+  if (+fFrom.value !== YEARS[0]) params.set('from', fFrom.value);
+  if (+fTo.value !== YEARS[YEARS.length - 1]) params.set('to', fTo.value);
+  if (push) history.replaceState(null, '', '?' + params.toString());
+  const my = ++seq;
+  document.getElementById('status').textContent = 'Searching…';
+  let res;
+  try { res = await (await fetch('/api/search?' + params.toString() + '&limit=200')).json(); }
+  catch (e) { document.getElementById('status').textContent = 'Search failed. Try again.'; return; }
+  if (my !== seq) return;
+  if (res.error) { document.getElementById('status').textContent = res.error; return; }
+  renderResults(res, q);
+}
+function highlight(text, res) {
+  if (!res.expanded || !res.expanded.length) return esc(text);
+  const vs = res.expanded.flatMap((e) => e.variants).filter((v) => v.length > 1).sort((a, b) => b.length - a.length);
+  const re = new RegExp('(^|[^A-Za-z0-9])(' + vs.map((v) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi');
+  return esc(text).replace(re, '$1<mark>$2</mark>');
+}
+function renderResults(res, q) {
+  const st = document.getElementById('status');
+  let msg = '';
+  if (res.mode === 'browse') msg = `${res.total} presentations match the filters${res.total > res.results.length ? ` — showing the ${res.results.length} most recent` : ''}.`;
+  else if (res.mode === 'all-terms') msg = `${res.total} presentation${res.total === 1 ? '' : 's'} match all terms${res.total > res.results.length ? ` — showing top ${res.results.length}` : ''}.`;
+  else msg = res.total ? `No presentation matches every term. Showing ${Math.min(res.total, res.results.length)} partial matches (any term).` : 'No matches. Try fewer or broader terms.';
+  const syn = (res.expanded || []).filter((e) => e.variants.length > 1).map((e) => `<span class="chip">${esc(e.term)} → ${e.variants.filter((v) => v !== e.term).map(esc).join(', ')}</span>`).join('');
+  st.innerHTML = esc(msg) + (syn ? `<div>Also searched: ${syn}</div>` : '');
+  const list = res.mode === 'browse' ? [...res.results].sort((a, b) => b.year - a.year) : res.results;
+  document.getElementById('results').innerHTML = list.length ? list.map((r) => `
+    <div class="result">
+      <div class="t">${highlight(r.title || '(untitled)', res)}</div>
+      <div class="m">${highlight(r.author || '—', res)} · ${r.year} · ${esc(r.conference)} <span class="badge">${esc(r.category)}</span>${r.partial ? ' <span class="partial">partial match</span>' : ''}</div>
+      <div class="acts">${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">View original on ${r.url.includes('isruinfo') ? 'isruinfo.com' : 'LPI/USRA'} →</a>` : '<span class="partial">No public link</span>'}
+        <button type="button" data-src="${r.id}">Find other public sources</button></div>
+      <div id="src-${r.id}"></div>
+    </div>`).join('') : '<p class="status">Nothing here.</p>';
+}
+document.getElementById('results').addEventListener('click', async (e) => {
+  const b = e.target.closest('button[data-src]'); if (!b) return;
+  const id = b.dataset.src, box = document.getElementById('src-' + id);
+  b.disabled = true; box.innerHTML = '<div class="srcbox">Searching NASA NTRS, LPI, arXiv and other public repositories… (10–30 s)</div>';
+  try {
+    const r = await fetch('/api/sources', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: +id }) });
+    const j = await r.json();
+    if (!r.ok) { box.innerHTML = `<div class="srcbox">${esc(j.error || 'Lookup failed.')}</div>`; b.disabled = false; return; }
+    box.innerHTML = `<div class="srcbox"><strong>Possible public sources</strong> <span class="partial">AI-suggested, unverified — check before citing</span>` +
+      (j.results.length ? '<ul>' + j.results.map((x) => `<li><a href="${esc(x.url)}" target="_blank" rel="noopener nofollow">${esc(x.title)}</a>${x.note ? ' — ' + esc(x.note) : ''}</li>`).join('') + '</ul>' : '<div>Nothing credible found.</div>') + '</div>';
+  } catch { box.innerHTML = '<div class="srcbox">Lookup failed.</div>'; b.disabled = false; }
+});
+
+// ---------- presenter key ----------
+function firstAuthor(a) { return String(a || '').split(/\s+and\s+|,|;|&|\bet al\b/i)[0].trim(); }
+function personKey(a) {
+  const f = firstAuthor(a).replace(/\./g, '. ').replace(/\s+/g, ' ').trim();
+  const parts = f.split(' ').filter(Boolean); if (!parts.length) return null;
+  const last = parts[parts.length - 1].toLowerCase(), init = parts[0][0].toLowerCase();
+  return parts.length === 1 ? last : last + '|' + init;
+}
+
+// ---------- dashboard ----------
+function drawDash() {
+  // KPIs
+  const people = new Set(ROWS.map((r) => personKey(r.author)).filter(Boolean));
+  const linked = ROWS.filter((r) => r.url).length;
+  document.getElementById('kpis').innerHTML = [
+    [ROWS.length.toLocaleString(), 'presentations'], [CONFS.length, 'conferences, 1999–2024'],
+    [people.size.toLocaleString(), 'distinct first presenters (approx.)'], [Math.round(100 * linked / ROWS.length) + '%', 'with a public link'],
+  ].map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+
+  const byConf = d3.rollup(ROWS, (v) => v.length, (r) => r.ci);
+  const confLabel = (c) => `${c.year}`;
+
+  // 1) bars per conference
+  {
+    const el = document.getElementById('cConf'); el.innerHTML = '';
+    const W = el.clientWidth, H = 240, m = { t: 10, r: 8, b: 28, l: 36 };
+    const x = d3.scaleBand().domain(CONFS.map((c, i) => i)).range([m.l, W - m.r]).padding(0.25);
+    const y = d3.scaleLinear().domain([0, d3.max(byConf.values())]).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r))).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickFormat((i) => W < 600 && i % 2 ? '' : confLabel(CONFS[i])).tickSizeOuter(0));
+    svg.append('g').selectAll('path').data(CONFS.map((c, i) => ({ c, i, n: byConf.get(i) || 0 }))).join('path')
+      .attr('d', (d) => roundedTop(x(d.i), y(d.n), x.bandwidth(), y(0) - y(d.n), Math.min(4, x.bandwidth() / 2)))
+      .attr('fill', css('--s1'))
+      .on('mousemove', (e, d) => showTip(e, `<b>${d.c.name}</b> · ${d.c.year}<br>${d.n} presentations`)).on('mouseleave', hideTip);
+    svg.append('g').selectAll('rect').data(CONFS.map((c, i) => ({ c, i, n: byConf.get(i) || 0 }))).join('rect')
+      .attr('x', (d) => x(d.i) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent')
+      .on('mousemove', (e, d) => showTip(e, `<b>${d.c.name}</b> · ${d.c.year}<br>${d.n} presentations`)).on('mouseleave', hideTip);
+  }
+
+  // 2) theme momentum — 100% stacked area, top 6 + Other
+  {
+    const totals = d3.rollups(ROWS, (v) => v.length, (r) => r.category).filter(([c]) => c !== 'General').sort((a, b) => b[1] - a[1]);
+    const top = totals.slice(0, 6).map((d) => d[0]); const keys = [...top, 'Other & unclassified'];
+    const colors = ['--s1', '--s2', '--s3', '--s4', '--s5', '--s7'].map(css).concat(css('--axis'));
+    const series = CONFS.map((c, i) => ({ c, i })).filter(({ i }) => ROWS.filter((r) => r.ci === i).length >= 5).map(({ c, i }) => {
+      const rs = ROWS.filter((r) => r.ci === i); const o = { i, year: c.year, name: c.name, n: rs.length };
+      keys.forEach((k) => o[k] = 0); rs.forEach((r) => o[top.includes(r.category) ? r.category : 'Other & unclassified']++);
+      keys.forEach((k) => o[k] = o[k] / (rs.length || 1)); return o;
+    });
+    document.getElementById('lgMomentum').innerHTML = keys.map((k, i) => `<span><i style="background:${colors[i]}"></i>${esc(k)}</span>`).join('');
+    const el = document.getElementById('cMomentum'); el.innerHTML = '';
+    const W = el.clientWidth, H = 280, m = { t: 8, r: 10, b: 28, l: 40 };
+    const x = d3.scaleLinear().domain(d3.extent(series, (d) => d.year)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain([0, 1]).range([H - m.b, m.t]);
+    const stack = d3.stack().keys(keys)(series);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5, '%').tickSize(-(W - m.l - m.r))).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickFormat(d3.format('d')).ticks(Math.min(12, W / 60)));
+    const area = d3.area().x((d) => x(d.data.year)).y0((d) => y(d[0])).y1((d) => y(d[1])).curve(d3.curveMonotoneX);
+    svg.append('g').selectAll('path').data(stack).join('path').attr('d', area).attr('fill', (d, i) => colors[i]).attr('stroke', css('--surface')).attr('stroke-width', 1.5);
+    const vline = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--ink2')).attr('stroke-width', 1).attr('opacity', 0);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('mousemove', (e) => {
+        const yr = x.invert(d3.pointer(e)[0]); const d = series.reduce((a, b) => Math.abs(b.year - yr) < Math.abs(a.year - yr) ? b : a);
+        vline.attr('x1', x(d.year)).attr('x2', x(d.year)).attr('opacity', 1);
+        showTip(e, `<b>${d.year} · ${d.name}</b> (${d.n} talks)<br>` + keys.slice().reverse().map((k) => `<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${colors[keys.indexOf(k)]}"></span> ${esc(k)}: ${Math.round(d[k] * 100)}%`).join('<br>'));
+      }).on('mouseleave', () => { vline.attr('opacity', 0); hideTip(); });
+  }
+
+  // 3) heatmap theme × conference
+  {
+    const el = document.getElementById('cHeat'); el.innerHTML = '';
+    const counts = d3.rollup(ROWS, (v) => v.length, (r) => r.category, (r) => r.ci);
+    const cats = [...CATS].sort((a, b) => (a === 'General') - (b === 'General') || d3.sum(counts.get(b)?.values() || []) - d3.sum(counts.get(a)?.values() || []));
+    const narrow = el.clientWidth < 700;
+    const m = { t: 6, r: 6, b: 28, l: narrow ? 120 : 200 }, W = el.clientWidth, cellH = 20, H = m.t + m.b + cellH * cats.length;
+    const x = d3.scaleBand().domain(CONFS.map((c, i) => i)).range([m.l, W - m.r]).padding(0.08);
+    const y = d3.scaleBand().domain(cats).range([m.t, H - m.b]).padding(0.08);
+    let max = 0; counts.forEach((mm) => mm.forEach((v) => max = Math.max(max, v)));
+    const col = d3.scaleSequential(d3.interpolateRgb(css('--seq0'), css('--seq1'))).domain([0, max]);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickFormat((i) => (narrow ? i % 3 : i % 2) ? '' : CONFS[i].year).tickSize(0)).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickSize(0).tickFormat((c) => narrow && c.length > 18 ? c.slice(0, 17) + '…' : c)).call((g) => g.select('.domain').remove()).selectAll('text').style('fill', css('--ink2'));
+    const cells = []; cats.forEach((c) => CONFS.forEach((cf, i) => cells.push({ c, i, v: counts.get(c)?.get(i) || 0 })));
+    svg.append('g').selectAll('rect').data(cells).join('rect').attr('x', (d) => x(d.i)).attr('y', (d) => y(d.c)).attr('width', x.bandwidth()).attr('height', y.bandwidth()).attr('rx', 3)
+      .attr('fill', (d) => d.v ? col(d.v) : 'transparent').attr('stroke', (d) => d.v ? 'none' : css('--grid'))
+      .on('mousemove', (e, d) => showTip(e, `<b>${esc(d.c)}</b><br>${CONFS[d.i].year} · ${CONFS[d.i].name}: ${d.v} presentation${d.v === 1 ? '' : 's'}`)).on('mouseleave', hideTip)
+      .style('cursor', 'pointer').on('click', (e, d) => { fCat.value = d.c; fConf.value = CONFS[d.i].name; document.getElementById('q').value = ''; showTab('search'); runSearch(true); });
+  }
+
+  // 4) first-time vs returning
+  {
+    const seen = new Set(); const data = CONFS.map((c, i) => {
+      const keys = new Set(ROWS.filter((r) => r.ci === i).map((r) => personKey(r.author)).filter(Boolean));
+      let nw = 0, rt = 0; keys.forEach((k) => seen.has(k) ? rt++ : nw++); keys.forEach((k) => seen.add(k));
+      return { i, c, New: nw, Returning: rt };
+    });
+    const keys = ['New', 'Returning'], colors = [css('--s1'), css('--s2')];
+    document.getElementById('lgNew').innerHTML = ['First-time', 'Returning'].map((k, i) => `<span><i style="background:${colors[i]}"></i>${k}</span>`).join('');
+    const el = document.getElementById('cNew'); el.innerHTML = '';
+    const W = el.clientWidth, H = 240, m = { t: 8, r: 6, b: 28, l: 32 };
+    const x = d3.scaleBand().domain(data.map((d) => d.i)).range([m.l, W - m.r]).padding(0.22);
+    const y = d3.scaleLinear().domain([0, d3.max(data, (d) => d.New + d.Returning)]).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r))).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickFormat((i) => i % 4 ? '' : CONFS[i].year).tickSizeOuter(0));
+    const st = d3.stack().keys(keys)(data);
+    svg.append('g').selectAll('g').data(st).join('g').attr('fill', (d, i) => colors[i]).selectAll('path').data((d) => d.map((v) => ({ v, key: d.key }))).join('path')
+      .attr('d', (d) => { const top = d.key === 'Returning' || d.v.data.Returning === 0; const h = y(d.v[0]) - y(d.v[1]) - (d.key === 'Returning' ? 2 : 0); return top ? roundedTop(x(d.v.data.i), y(d.v[1]), x.bandwidth(), Math.max(0, h), Math.min(3, x.bandwidth() / 2)) : `M${x(d.v.data.i)},${y(d.v[1])}h${x.bandwidth()}v${Math.max(0, h)}h${-x.bandwidth()}Z`; })
+      .on('mousemove', (e, d) => showTip(e, `<b>${d.v.data.c.year} · ${d.v.data.c.name}</b><br>First-time: ${d.v.data.New}<br>Returning: ${d.v.data.Returning}`)).on('mouseleave', hideTip);
+  }
+
+  // 5) top presenters
+  const pcount = new Map(), pname = new Map(), pconf = new Map(), pcats = new Map();
+  ROWS.forEach((r) => {
+    const k = personKey(r.author); if (!k) return;
+    pcount.set(k, (pcount.get(k) || 0) + 1);
+    const nm = firstAuthor(r.author); const sc = (n) => (/^[A-Za-z]{2,}\s/.test(n) ? 100 : 0) + n.length; if (!pname.has(k) || sc(nm) > sc(pname.get(k))) pname.set(k, nm);
+    if (!pconf.has(k)) pconf.set(k, new Set()); pconf.get(k).add(r.ci);
+    if (!pcats.has(k)) pcats.set(k, new Map()); const cm = pcats.get(k); cm.set(r.category, (cm.get(r.category) || 0) + 1);
+  });
+  {
+    const top = [...pconf].map(([k, s]) => ({ k, name: pname.get(k), confs: s.size, talks: pcount.get(k) })).sort((a, b) => b.confs - a.confs || b.talks - a.talks).slice(0, 12);
+    const el = document.getElementById('cTop'); el.innerHTML = '';
+    const W = el.clientWidth, rowH = 20, m = { t: 4, r: 30, b: 4, l: 130 }, H = m.t + m.b + rowH * top.length;
+    const x = d3.scaleLinear().domain([0, d3.max(top, (d) => d.confs)]).range([m.l, W - m.r]);
+    const y = d3.scaleBand().domain(top.map((d) => d.k)).range([m.t, H - m.b]).padding(0.28);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    const g = svg.append('g').selectAll('g').data(top).join('g')
+      .on('mousemove', (e, d) => showTip(e, `<b>${esc(d.name)}</b><br>${d.confs} conferences · ${d.talks} talks as first presenter`)).on('mouseleave', hideTip)
+      .style('cursor', 'pointer').on('click', (e, d) => { document.getElementById('q').value = d.name.split(' ').pop(); fCat.value = ''; fConf.value = ''; showTab('search'); runSearch(true); });
+    g.append('rect').attr('x', 0).attr('y', (d) => y(d.k) - 3).attr('width', W).attr('height', y.bandwidth() + 6).attr('fill', 'transparent');
+    g.append('path').attr('d', (d) => roundedRight(x(0), y(d.k), x(d.confs) - x(0), y.bandwidth(), 3)).attr('fill', css('--s1'));
+    g.append('text').attr('x', m.l - 8).attr('y', (d) => y(d.k) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').style('fill', css('--ink2')).style('font-size', '12px').text((d) => d.name.length > 20 ? d.name.slice(0, 19) + '…' : d.name);
+    g.append('text').attr('x', (d) => x(d.confs) + 5).attr('y', (d) => y(d.k) + y.bandwidth() / 2).attr('dy', '0.35em').style('fill', css('--ink2')).text((d) => d.confs);
+  }
+
+  // 6) knowledge web
+  {
+    const el = document.getElementById('cWeb'); el.innerHTML = '';
+    const W = el.clientWidth, H = Math.min(620, Math.max(420, W * 0.6));
+    const topP = [...pcount].sort((a, b) => b[1] - a[1]).slice(0, 40).map(([k]) => k);
+    const catTotals = d3.rollup(ROWS, (v) => v.length, (r) => r.category);
+    const themeList = CATS.filter((c) => c !== 'General'), R = Math.min(W * 0.27, H * 0.40);
+    const nodes = themeList.map((c, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / themeList.length; return { id: 'c:' + c, label: c, type: 'theme', n: catTotals.get(c) || 0, a, fx: W / 2 + R * Math.cos(a), fy: H / 2 + R * Math.sin(a) }; })
+      .concat(topP.map((k) => ({ id: 'p:' + k, label: pname.get(k), type: 'person', n: pcount.get(k) })));
+    const links = [];
+    topP.forEach((k) => pcats.get(k).forEach((v, c) => { if (c !== 'General') links.push({ source: 'p:' + k, target: 'c:' + c, v }); }));
+    const cT = css('--s1'), cP = css('--s2');
+    document.getElementById('lgWeb').innerHTML = `<span><i style="background:${cT}"></i>Theme</span><span><i style="background:${cP};border-radius:50%"></i>Presenter</span>`;
+    const r = (d) => d.type === 'theme' ? 6 + Math.sqrt(d.n) * 1.3 : 4 + Math.sqrt(d.n) * 1.6;
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
+    const sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id((d) => d.id).distance(40).strength((l) => 0.05 + 0.05 * l.v))
+      .force('charge', d3.forceManyBody().strength(-40))
+      .force('center', d3.forceCenter(W / 2, H / 2)).force('collide', d3.forceCollide((d) => r(d) + 3))
+      .force('x', d3.forceX(W / 2).strength(0.05)).force('y', d3.forceY(H / 2).strength(0.08));
+    const link = svg.append('g').attr('stroke', css('--axis')).attr('stroke-opacity', 0.7).selectAll('line').data(links).join('line').attr('stroke-width', (d) => Math.min(4, 0.6 + d.v * 0.5));
+    const node = svg.append('g').selectAll('g').data(nodes).join('g').style('cursor', 'grab')
+      .call(d3.drag().on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
+        .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; }).on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); if (d.type === 'person') { d.fx = null; d.fy = null; } }));
+    node.filter((d) => d.type === 'person').style('cursor', 'grab');
+    node.append('circle').attr('r', r).attr('fill', (d) => d.type === 'theme' ? cT : cP).attr('stroke', css('--surface')).attr('stroke-width', 2);
+    node.filter((d) => d.type === 'theme').append('text').text((d) => W < 600 && d.label.length > 16 ? d.label.split(/[ ,&]/)[0] : d.label).attr('x', (d) => Math.cos(d.a) >= -0.01 ? r(d) + 4 : -(r(d) + 4)).attr('text-anchor', (d) => Math.cos(d.a) >= -0.01 ? 'start' : 'end').attr('dy', '0.35em').style('fill', css('--ink')).style('font-size', '12px').style('font-weight', 600).style('paint-order', 'stroke').style('stroke', css('--surface')).style('stroke-width', 3);
+    const nbr = new Map(); links.forEach((l) => { const s = l.source.id || l.source, t = l.target.id || l.target; (nbr.get(s) || nbr.set(s, new Set()).get(s)).add(t); (nbr.get(t) || nbr.set(t, new Set()).get(t)).add(s); });
+    node.on('mousemove', (e, d) => {
+      const ns = nbr.get(d.id) || new Set();
+      node.style('opacity', (o) => o.id === d.id || ns.has(o.id) ? 1 : 0.2);
+      link.attr('stroke-opacity', (l) => l.source.id === d.id || l.target.id === d.id ? 1 : 0.1);
+      showTip(e, d.type === 'theme' ? `<b>${esc(d.label)}</b><br>${d.n} presentations overall` : `<b>${esc(d.label)}</b><br>${d.n} talks as first presenter<br>` + [...pcats.get(d.id.slice(2))].sort((a, b) => b[1] - a[1]).map(([c, v]) => `${esc(c)}: ${v}`).join('<br>'));
+    }).on('mouseleave', () => { node.style('opacity', 1); link.attr('stroke-opacity', 0.7); hideTip(); });
+    sim.on('tick', () => {
+      nodes.forEach((d) => { d.x = Math.max(12, Math.min(W - 12, d.x)); d.y = Math.max(12, Math.min(H - 12, d.y)); });
+      link.attr('x1', (d) => d.source.x).attr('y1', (d) => d.source.y).attr('x2', (d) => d.target.x).attr('y2', (d) => d.target.y);
+      node.attr('transform', (d) => `translate(${d.x},${d.y})`);
+    });
+  }
+}
+function roundedTop(x, y, w, h, rr) { if (h <= 0) return ''; rr = Math.min(rr, h); return `M${x},${y + h}V${y + rr}Q${x},${y} ${x + rr},${y}H${x + w - rr}Q${x + w},${y} ${x + w},${y + rr}V${y + h}Z`; }
+function roundedRight(x, y, w, h, rr) { if (w <= 0) return ''; rr = Math.min(rr, w); return `M${x},${y}H${x + w - rr}Q${x + w},${y} ${x + w},${y + rr}V${y + h - rr}Q${x + w},${y + h} ${x + w - rr},${y + h}H${x}Z`; }
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (dashDrawn && !document.getElementById('tab-dash').classList.contains('hidden')) drawDash(); }, 200); });
+
+// ---------- browse table ----------
+let sortK = 'year', sortDir = -1;
+function drawBrowse() {
+  const tb = document.querySelector('#btable tbody'), fq = document.getElementById('bq').value.toLowerCase().trim();
+  const words = fq.split(/\s+/).filter(Boolean);
+  const rows = ROWS.filter((r) => words.every((w) => (r.title + ' ' + r.author + ' ' + r.conference + ' ' + r.category + ' ' + r.year).toLowerCase().includes(w)))
+    .sort((a, b) => (a[sortK] > b[sortK] ? 1 : a[sortK] < b[sortK] ? -1 : 0) * sortDir || a.id - b.id);
+  document.getElementById('bcount').textContent = `${rows.length} of ${ROWS.length}`;
+  tb.innerHTML = rows.map((r) => `<tr><td class="num">${r.year}</td><td>${esc(r.conference)}</td><td>${esc(r.author)}</td><td>${esc(r.title)}</td><td>${esc(r.category)}</td><td>${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Open →</a>` : '—'}</td></tr>`).join('');
+}
+document.getElementById('bq').oninput = () => drawBrowse();
+document.querySelectorAll('#btable th[data-k]').forEach((th) => th.onclick = () => { const k = th.dataset.k; sortDir = sortK === k ? -sortDir : (k === 'year' ? -1 : 1); sortK = k; drawBrowse(); });
+})();
+
+// ---------- contact form ----------
+(() => {
+  const f = document.getElementById('contactForm'); if (!f) return;
+  const st = document.getElementById('contactStatus');
+  f.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!f.reportValidity()) return;
+    const btn = f.querySelector('button[type=submit]'); btn.disabled = true; st.textContent = 'Sending…';
+    try {
+      const r = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(f))) });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok) { f.reset(); st.textContent = 'Thanks — your message was sent.'; }
+      else st.textContent = j.error || 'Sending failed. Please try again later.';
+    } catch { st.textContent = 'Sending failed. Please try again later.'; }
+    btn.disabled = false;
+  });
+})();
+</script>
+</body>
+</html>
