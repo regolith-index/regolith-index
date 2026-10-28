@@ -1,6 +1,6 @@
 # Regolith Index
 
-A searchable index and dashboard of ~1,000 presentations from the Space Resources Roundtable (1999–2024).
+A searchable index and dashboard of ~1,230 presentations from the Space Resources Roundtable (1999–2026).
 It holds only titles, presenters and conference metadata. Every entry links out to the original on isruinfo.com or LPI/USRA, and no presentation files are hosted here.
 
 It is independent and not affiliated with the Space Resources Roundtable, the Colorado School of Mines, LPI/USRA or isruinfo.com.
